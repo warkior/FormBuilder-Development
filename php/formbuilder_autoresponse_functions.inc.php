@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
  	function formbuilder_options_editResponse($response_id)
  	{
- 		global $wpdb, $formbuilder_admin_nav_options;
+ 		global $wpdb;
 
  		if(!formbuilder_user_can('create'))
 		{

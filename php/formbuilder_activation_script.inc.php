@@ -1090,6 +1090,21 @@ WARNING! This update will change how the email FROM address is created. You may 
 				update_option('formbuilder_version', "0.93");
 			}
 			
+		
+			
+			// Upgrade to version 1.00
+			if(get_option('formbuilder_version') < 1.00)
+			{
+				formbuilder_admin_alert("Upgraded FormBuilder to version 1.00", nl2br("
+* It's high-time we hit the 1.0 mark with this plugin. With the change in ownership, this is a good time to do it.
+* NEW! FormBuilder Extensions - Find them on the main FormBuilder navigation bar.
+* Fixed or removed a number of links that connected to the old site.
+* Added some action hooks in preparation for future enhancements.
+					"));
+				
+				update_option('formbuilder_version', "1.00");
+			}
+			
 			
 			
 			

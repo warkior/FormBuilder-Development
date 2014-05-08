@@ -9,6 +9,7 @@
 	require_once(FORMBUILDER_PLUGIN_PATH . "php/formbuilder_activation_script.inc.php");
 	require_once(FORMBUILDER_PLUGIN_PATH . "captcha/CaptchaSecurityImages.php");
 	require_once(FORMBUILDER_PLUGIN_PATH . "extensions/formbuilder_xml_db_results.class.php");
+	require_once(FORMBUILDER_PLUGIN_PATH . "extensions/formbuilder_extensions.class.php");
 	
 	// Activate debugging object.
 #	require_once(FORMBUILDER_PLUGIN_PATH . "class/FBObject.class.php");

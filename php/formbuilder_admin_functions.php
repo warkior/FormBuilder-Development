@@ -62,12 +62,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 		$version = get_option('formbuilder_version');
 		
-		$formbuilder_admin_nav_options = array();
-		if(formbuilder_user_can('manage')) $formbuilder_admin_nav_options['settings'] = __("Settings", 'formbuilder');
-		if(formbuilder_user_can('create')) $formbuilder_admin_nav_options['forms'] = __("Forms", 'formbuilder');
-		if(formbuilder_user_can('create')) $formbuilder_admin_nav_options['formResults'] = __("Stored Results", 'formbuilder');
-		if(formbuilder_user_can('manage'))$formbuilder_admin_nav_options['strings'] = __("Text Translations", 'formbuilder');
-
+		$formbuilder_admin_nav_options = formbuilder_get_admin_nav_options();
 		?>
 
 
@@ -84,6 +79,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			formbuilder_admin_warning(sprintf(__("WARNING: FormBuilder has known compatibility issues with the '%s' theme.", 'formbuilder'), $theme_name));
 		
 		if(!isset($_GET['fbaction'])) $_GET['fbaction'] = false;
+		
+		// Allow for alternate systems to do something with the action.
+		// If nothing is returned, proceed with the regular built-in functions.
+		$result = apply_filters('formbuilder_display_options_page', $_GET['fbaction']);
+		if(!empty($result))
+			return;
+		
 		switch($_GET['fbaction']) {
 
 			case "newForm":
@@ -167,19 +169,32 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		<?php
 
 	}
+	
+	function formbuilder_get_admin_nav_options()
+	{
+		$formbuilder_admin_nav_options = array();
+		if(formbuilder_user_can('manage')) $formbuilder_admin_nav_options['settings'] = __("Settings", 'formbuilder');
+		if(formbuilder_user_can('create')) $formbuilder_admin_nav_options['forms'] = __("Forms", 'formbuilder');
+		if(formbuilder_user_can('create')) $formbuilder_admin_nav_options['formResults'] = __("Stored Results", 'formbuilder');
+		if(formbuilder_user_can('manage'))$formbuilder_admin_nav_options['strings'] = __("Text Translations", 'formbuilder');
+		
+		$formbuilder_admin_nav_options = apply_filters('formbuilder_get_admin_nav_options', $formbuilder_admin_nav_options);
+		
+		return($formbuilder_admin_nav_options);
+	}
 
 	function formbuilder_admin_nav($selected = 'forms')
 	{
-		global $formbuilder_admin_nav_options;
+		$formbuilder_nav_options = formbuilder_get_admin_nav_options();
 		?>
 		<?php if(isset($_GET['fbmsg']) AND $_GET['fbmsg'] != "") formbuilder_admin_alert(stripslashes($_GET['fbmsg'])); ?>
 <div class="formbuilder-subnav">
 	<ul class="subsubsub">
-		<?php foreach( $formbuilder_admin_nav_options as $key=>$value ) { ?>
+		<?php foreach( $formbuilder_nav_options as $key=>$value ) { ?>
 		<li><a <?php if($selected == $key) { ?>class="current"<?php } ?> href="<?php echo FB_ADMIN_PLUGIN_PATH; ?>&fbaction=<?php echo $key; ?>"><?php echo $value; ?></a> |</li>
 		<?php } ?>
-		<li><a href="http://truthmedia.com/category/formbuilder/"><?php _e("Blog", 'formbuilder'); ?></a> |</li>
-		<li><a href="http://truthmedia.com/wordpress/formbuilder/documentation"><?php _e("Documentation", 'formbuilder'); ?></a></li>
+		<?php do_action('formbuilder_display_nav'); ?>
+		<li><a href="http://www.warkensoft.com/wordpress/formbuilder/documentation"><?php _e("Documentation", 'formbuilder'); ?></a></li>
 	</ul>
 </div>
 		<?php

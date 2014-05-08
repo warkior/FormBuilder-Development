@@ -36,8 +36,6 @@ class formbuilder_xml_db_results
 	// Methods
 	function show_adminpage()
 	{
- 		global $formbuilder_admin_nav_options;
-		
 		if(!formbuilder_user_can('create'))
 		{
 			formbuilder_admin_alert('You do not have permission to access this area.');

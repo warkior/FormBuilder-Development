@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
  	function formbuilder_options_default()
  	{
- 		global $wpdb, $formbuilder_admin_nav_options;
+ 		global $wpdb;
 		$relative_path = FORMBUILDER_PLUGIN_URL;
 
 		if(!formbuilder_user_can('create'))
@@ -176,7 +176,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	 */
  	function formbuilder_options_editForm($form_id)
  	{
- 		global $wpdb, $formbuilder_admin_nav_options;
+ 		global $wpdb;
  		
  		/*
  		 * Permissions control.  Block users who can't create new forms.
@@ -894,7 +894,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
  	function formbuilder_options_copyForm($form_id)
  	{
-		global $wpdb, $formbuilder_admin_nav_options;
+		global $wpdb;
 		
 		if(!formbuilder_user_can('create'))
 		{
@@ -942,7 +942,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	function formbuilder_options_removeForm($form_id)
 	{
-		global $wpdb, $formbuilder_admin_nav_options;
+		global $wpdb;
 		
 		if(!formbuilder_user_can('create'))
 		{
@@ -978,7 +978,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
 	function formbuilder_options_settings()
  	{
- 		global $wpdb, $formbuilder_admin_nav_options;
+ 		global $wpdb;
 		$relative_path = FORMBUILDER_PLUGIN_URL;
 		
 		if(!formbuilder_user_can('manage'))
@@ -995,7 +995,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	function formbuilder_options_strings()
  	{
- 		global $wpdb, $formbuilder_admin_nav_options;
+ 		global $wpdb;
  		
 		if(!formbuilder_user_can('manage'))
 		{

@@ -1374,6 +1374,30 @@ function toggleVisOff(boxid)
 	// Function to send an email
 	function formbuilder_send_email($to, $subject, $message, $headers="")
 	{
+		// Allow for other applications to handle mail if needed.
+		$send_result = apply_filters('formbuilder_send_email', array(
+				'to'		=> $to,
+				'subject'	=> $subject,
+				'message'	=> $message,
+				'headers'	=> $headers,
+		));
+		
+		// If a result is returned, we should not proceed with the
+		// built-in mailing process.
+		if($send_result == '1')
+		{
+			return false;
+		}
+		elseif(!empty($send_result))
+		{
+			return($send_result);
+		}
+		else
+		{
+			// Continue with normal sending functions.
+		}
+		
+		// Continue with normal sending.
 		$formBuilderTextStrings = formbuilder_load_strings();
 		
 		// Check to and subject for header injections

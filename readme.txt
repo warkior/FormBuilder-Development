@@ -3,7 +3,7 @@ Contributors: warkior
 Tags: form, forms, email, comments, contact, input, spam, form to email, email form, contact form
 Requires at least: 2.7
 Tested up to: 3.9
-Stable tag: 0.93
+Stable tag: 1.0
 
 Allows WordPress bloggers to easily create customised contact forms for use on pages or posts.
 
@@ -68,11 +68,17 @@ Programming and Design by [James Warkentin](http://www.warkior.com/)
 
 == Changelog ==
 
+= 1.00 =
+* It's high-time we hit the 1.0 mark with this plugin. With the change in ownership, this is a good time to do it.
+* NEW! FormBuilder Extensions - Find them on the main FormBuilder navigation bar.
+* Fixed or removed a number of links that connected to the old site.
+* Added some action hooks in preparation for future enhancements.
+
 = 0.93 =
 * Ownership Change: TruthMedia will no longer be maintaining this plugin. Ongoing development will be handled by James Warkentin.
 * Better Email Handling: Switching forms to send from predefined email address, rather than from the visitor. This avoids many spam false positives and complies properly with new DMARK policy rules.
 WARNING! This update will change how the email FROM address is created. You may adjust the default on the settings page.
-
+ 
 = 0.92 =
 * Cleanup: Cleaning up small bugs and deprecated code in more recent versions of WordPress.
 * Bug Fix: Switched referrer field to populate using JS rather than PHP to allow better functionality on cached sites.

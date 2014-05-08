@@ -1,6 +1,4 @@
-<?php formbuilder_admin_nav('strings'); 
-#echo "Strings: <pre>"; print_r($formBuilderTextStrings); echo "</pre>";
- ?>
+<?php formbuilder_admin_nav('strings'); ?>
 <fieldset class="options metabox-holder">
 
 	<div class="info-box-formbuilder postbox">
