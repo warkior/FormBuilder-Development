@@ -1375,12 +1375,13 @@ function toggleVisOff(boxid)
 	function formbuilder_send_email($to, $subject, $message, $headers="")
 	{
 		// Allow for other applications to handle mail if needed.
-		$send_result = apply_filters('formbuilder_send_email', array(
+		$send_data = array(
 				'to'		=> $to,
 				'subject'	=> $subject,
 				'message'	=> $message,
 				'headers'	=> $headers,
-		));
+		);
+		$send_result = apply_filters('formbuilder_send_email', $send_data);
 		
 		// If a result is returned, we should not proceed with the
 		// built-in mailing process.
@@ -1388,7 +1389,7 @@ function toggleVisOff(boxid)
 		{
 			return false;
 		}
-		elseif(!empty($send_result))
+		elseif($send_result != $send_data)
 		{
 			return($send_result);
 		}
