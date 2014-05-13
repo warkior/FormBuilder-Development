@@ -563,14 +563,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 					   	if(!is_file($module_filename)) continue;
 					   	$module_data = implode("", file($module_filename));
 
-					   	if(eregi("\n\w*name\: ([^\r\n]+)", $module_data, $regs)) {
+					   	if(preg_match("#\n\w*name\: ([^\r\n]+)#isU", $module_data, $regs)) {
 					   		$module_name = $regs[1];
 					   	} else {
 					   		$module_name = $entry;
 					   	}
 					   	$field['Type'] .= ",'$entry|$module_name'";
 					   	
-					   	if(eregi("\n\w*instructions\: ([^\r\n]+)", $module_data, $regs)) {
+					   	if(preg_match("#\n\w*instructions\: ([^\r\n]+)#isU", $module_data, $regs)) {
 					   		$module_instructions = "\\n\\n" . addslashes($regs[1]);
 					   	} else {
 					   		$module_instructions = "";
@@ -854,7 +854,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 				   	if(!is_file($module_filename)) continue;
 				   	$module_data = implode("", file($module_filename));
 	
-				   	if(eregi("\n\w*name\: ([^\r\n]+)", $module_data, $regs)) {
+				   	if(preg_match("#\n\w*name\: ([^\r\n]+)#isU", $module_data, $regs)) {
 				   		$module_name = $regs[1];
 				   	} else {
 				   		$module_name = $entry;
@@ -862,7 +862,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 				   	$action['file'] = $entry;
 				   	$action['name'] = $module_name;
 				   	
-				   	if(eregi("\n\w*instructions\: ([^\r\n]+)", $module_data, $regs)) {
+				   	if(preg_match("#\n\w*instructions\: ([^\r\n]+)#isU", $module_data, $regs)) {
 				   		$module_instructions = "\\n\\n" . addslashes($regs[1]);
 				   	} else {
 				   		$module_instructions = "";
@@ -1037,7 +1037,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		
 		if(!isset($field_info['Title'])) $field_info['Title'] = ""; 
 
-		if(eregi("[a-z]+\(([0-9]+)\)", $field_info['Type'], $regs))
+		if(preg_match("#[a-z]+\(([0-9]+)\)#isU", $field_info['Type'], $regs))
 		{
 			if($regs[1] > 50)  $size = 50;
 			else $size = $regs[1];
@@ -1053,7 +1053,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 					"/>";
 		}
 
-		elseif(eregi("enum\((.+)\)", $field_info['Type'], $regs))
+		elseif(preg_match("#enum\((.+)\)#isU", $field_info['Type'], $regs))
 		{
 			$enum_values = explode(",", $regs[1]);
 
@@ -1084,9 +1084,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			$field_details .= "</select>";
 		}
 		
-		elseif(eregi("blob", $field_info['Type']) 
-			OR eregi("text", $field_info['Type']) 
-			OR eregi("longtext", $field_info['Type']))
+		elseif(strpos("blob", $field_info['Type']) !== false 
+			OR strpos("text", $field_info['Type']) !== false 
+			OR strpos("longtext", $field_info['Type']) !== false )
 		{
 			$blob_cols = 52;
 

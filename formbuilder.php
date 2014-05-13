@@ -439,7 +439,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		$counter = 0;
 		$tmp = $content;
 
-		while(eregi(FORMBUILDER_CONTENT_TAG, $tmp, $regs)) {
+		while(preg_match('#' . FORMBUILDER_CONTENT_TAG . '#isU', $tmp, $regs)) {
 			$form_ids[$counter]['id'] = trim($regs[1]);
 			$form_ids[$counter]['tag'] = $regs[0];
 			$tmp = str_replace($regs[0], "", $tmp);
@@ -451,7 +451,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 	// Function to strip all form tags from any content.
 	function formbuilder_strip_content($content) {
-		while(eregi(FORMBUILDER_CONTENT_TAG, $content, $regs)) {
+		while(preg_match('#' . FORMBUILDER_CONTENT_TAG . '#isU', $content, $regs)) {
 			$content = str_replace($regs[0], "", $content);
 		}
 		return($content);
@@ -774,7 +774,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	    }
 	    
 	    // Remove extra dots from the list of pages, allowing it to be shortened.
-	    $output = ereg_replace('(\. ){2,}', ' .. ', $output);
+	    $output = preg_replace('#(\. ){2,}#sU', ' .. ', $output);
 	    
 	    // Determine whether to show the HTML, or just return it.
 	    if($show) echo $output;

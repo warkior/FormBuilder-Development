@@ -179,7 +179,7 @@ class formbuilder_xml_db_results
 				$where .= " AND timestamp > '$timestamp_from' AND timestamp < '$timestamp_to'";
 			}
 	
-			if(isset($_POST['form_id']) AND $_POST['form_id'] != "" AND eregi('^[0-9]+$', $_POST['form_id']))
+			if(isset($_POST['form_id']) AND $_POST['form_id'] != "" AND preg_match('#^[0-9]+$#isU', $_POST['form_id']))
 			{
 				$form_id = addslashes(trim($_POST['form_id']));
 				$specific_form = true;
@@ -283,7 +283,7 @@ class formbuilder_xml_db_results
 		$error = '';
 		
 		// Check to ensure we have a valid looking email id.
-		if(!eregi('^[0-9]+$', $email_id)) $error .= "Invalid email ID  ";
+		if(!preg_match('#^[0-9]+$#isU', $email_id)) $error .= "Invalid email ID  ";
 
 		// Load the details of the email from the DB.
 		if(!$error)
@@ -347,7 +347,7 @@ class formbuilder_xml_db_results
 	function show_resend_email($email_id)
 	{
 		global $wpdb;
-		if(!eregi('^[0-9]+$', $email_id)) $error = "Invalid email ID";
+		if(!preg_match('#^[0-9]+$#isU', $email_id)) $error = "Invalid email ID";
 		
 		if(!isset($error))
 		{
@@ -469,7 +469,7 @@ class formbuilder_xml_db_results
 			$error .= "The time period in which you could have resent these emails has expired.  Please try again.  "; 
 		
 		foreach($email_ids as $email_id)
-			if(!eregi('^[0-9]+$', $email_id)) $error .= "Invalid email ID(s) detected.  ";
+			if(!preg_match('#^[0-9]+$#isU', $email_id)) $error .= "Invalid email ID(s) detected.  ";
 		
 		if(!$error)
 		{
@@ -574,7 +574,7 @@ class formbuilder_xml_db_results
 	function show_email($email_id)
 	{
 		global $wpdb;
-		if(!eregi('^[0-9]+$', $email_id)) $error = "Invalid email ID";
+		if(!preg_match('#^[0-9]+$#isU', $email_id)) $error = "Invalid email ID";
 		
 		$searchQuery = '';
 		if(isset($_GET['searchQuery']))
@@ -830,7 +830,7 @@ class formbuilder_xml_db_results
 		}
 		
 		// Check to see if we should display multiple pages.
-		if(isset($_GET['pageNumber']) AND eregi("^[0-9]+$", $_GET['pageNumber'])) 
+		if(isset($_GET['pageNumber']) AND preg_match("#^[0-9]+$#isU", $_GET['pageNumber'])) 
 			$result_page = $_GET['pageNumber'];
 		else 
 			$result_page = 1;
@@ -978,7 +978,7 @@ class formbuilder_xml_db_results
 			$where .= " AND timestamp > '$timestamp_from' AND timestamp < '$timestamp_to'";
 		}
 
-		if(isset($_POST['form_id']) AND $_POST['form_id'] != "" AND eregi('^[0-9]+$', $_POST['form_id']))
+		if(isset($_POST['form_id']) AND $_POST['form_id'] != "" AND preg_match('#^[0-9]+$#isU', $_POST['form_id']))
 		{
 			$form_id = addslashes(trim($_POST['form_id']));
 			$specific_form = true;
@@ -1012,7 +1012,7 @@ class formbuilder_xml_db_results
 			$first = true;
 			foreach($formIDs as $form_id)
 			{
-				if(eregi('^[0-9]+$', $form_id))
+				if(preg_match('#^[0-9]+$#isU', $form_id))
 				{
 					$form_id = addslashes(trim($form_id));
 					if(!$first) $where .= " OR";

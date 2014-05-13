@@ -152,8 +152,8 @@
 		// Load the Form Action module, if different than the standard.
 		if($form['action'] != "") {
 			if(include_once(FORMBUILDER_PLUGIN_PATH . "modules/" . $form['action'])) {
-				$startup_funcname = "formbuilder_startup_" . eregi_replace("\..+", "", $form['action']);
-				$processor_funcname = "formbuilder_process_" . eregi_replace("\..+", "", $form['action']);
+				$startup_funcname = "formbuilder_startup_" . preg_replace("#\..+#isU", "", $form['action']);
+				$processor_funcname = "formbuilder_process_" . preg_replace("#\..+#isU", "", $form['action']);
 
 				if(function_exists("$startup_funcname"))
 					$module_status = $startup_funcname($form);
@@ -275,7 +275,7 @@ function toggleVisOff(boxid)
 				{
 					$error_msg = "";
 					
-					$divClass = "control-group formBuilderField " . eregi_replace("[^a-z0-9]", "-", $field['field_type']);
+					$divClass = "control-group formBuilderField " . preg_replace("#[^a-z0-9]#isU", "-", $field['field_type']);
 					$divID = "formBuilderField" . clean_field_name($field['field_name']);
 
 					$lb = "<br/>";
@@ -361,7 +361,7 @@ function toggleVisOff(boxid)
 							else
 								$option_value = $option_label = $options[$field['value']];
 							
-							if(!eregi(FORMBUILDER_PATTERN_EMAIL, $option_value))
+							if(!preg_match('#' . FORMBUILDER_PATTERN_EMAIL . '#isU', $option_value))
 							{
 								$error_msg = $field['error_message'];
 								$post_errors = true;
@@ -1113,7 +1113,7 @@ function toggleVisOff(boxid)
 	
 			case "email address":
 				$pattern = FORMBUILDER_PATTERN_EMAIL;
-				if(eregi($pattern, $field['value']))
+				if(preg_match('#' . $pattern . '#isU', $field['value']))
 				{
 					$last_email_address = $field['value'];
 					$_SESSION['formbuilder']['last_email_address'] = $last_email_address;
@@ -1274,7 +1274,7 @@ function toggleVisOff(boxid)
 			elseif($field['field_type'] == "recipient selection")
 			{
 				// If we have a recipient selection field, change the form recipient to the selected value.
-				if( eregi(FORMBUILDER_PATTERN_EMAIL, trim($field['value'])) )
+				if( preg_match('#' . FORMBUILDER_PATTERN_EMAIL . '#isU', trim($field['value'])) )
 				{
 					$form['recipient'] = trim($field['value']);
 				}

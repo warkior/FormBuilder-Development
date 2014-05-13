@@ -167,7 +167,7 @@ function formbuilder_checkCreditCard ($cardnumber, $cardname='', &$errornumber, 
   $cardNo = str_replace (' ', '', $cardnumber);  
    
   // Check that the number is numeric and of the right sort of length.
-  if (!eregi('^[0-9]{13,19}$',$cardNo))  {
+  if (!preg_match('#^[0-9]{13,19}$#isU', $cardNo))  {
      $errornumber = 2;     
      $errortext = $ccErrors [$errornumber];
      return false; 
@@ -216,7 +216,8 @@ function formbuilder_checkCreditCard ($cardnumber, $cardname='', &$errornumber, 
   $PrefixValid = false; 
   for ($i=0; $i<sizeof($prefix); $i++) {
     $exp = '^' . $prefix[$i];
-    if (ereg($exp,$cardNo)) {
+    $exp = str_replace('#', '\#', $exp);
+    if (preg_match("#{$exp}#sU",$cardNo)) {
       $PrefixValid = true;
       break;
     }

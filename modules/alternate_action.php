@@ -257,7 +257,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			$headers[strtoupper($regs[1][0])] = trim($regs[2][0]);
 		}
 		
-		if(eregi("HTTP/([^ ]+) +([0-9]+)", $header, $regs))
+		if(preg_match("#HTTP/([^ ]+) +([0-9]+)#isU", $header, $regs))
 		{
 			$headers['HTTPVER'] = trim($regs[1]);
 			$headers['STATUS'] = trim($regs[2]);

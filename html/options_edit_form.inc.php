@@ -138,14 +138,14 @@
 									   	if(!is_file($module_filename)) continue;
 									   	$module_data = implode("", file($module_filename));
 				
-									   	if(eregi("\n\w*name\: ([^\r\n]+)", $module_data, $regs)) {
+									   	if(preg_match("#\n\w*name\: ([^\r\n]+)#isU", $module_data, $regs)) {
 									   		$module_name = $regs[1];
 									   	} else {
 									   		$module_name = $entry;
 									   	}
 									   	$field['options'][$entry] = $module_name;
 									   	
-									   	if(eregi("\n\w*instructions\: ([^\r\n]+)", $module_data, $regs)) {
+									   	if(preg_match("#\n\w*instructions\: ([^\r\n]+)#isU", $module_data, $regs)) {
 									   		$module_instructions = "\\n\\n" . addslashes($regs[1]);
 									   	} else {
 									   		$module_instructions = "";

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	else die();
 	
 	// Define the field ID
-	if(eregi("^[0-9]+$", trim($_GET['fieldid']))) 
+	if(preg_match("#^[0-9]+$#isU", trim($_GET['fieldid']))) 
 		$field_id = trim($_GET['fieldid']);
 	else
 		die();
