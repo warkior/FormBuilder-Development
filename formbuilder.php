@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */
 	
-	define("FORMBUILDER_VERSION_NUM", "1.01");
+	define("FORMBUILDER_VERSION_NUM", "1.02");
 
 	// Define FormBuilder Related Tables
 	global $table_prefix;
