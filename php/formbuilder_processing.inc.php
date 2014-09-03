@@ -317,7 +317,10 @@ function toggleVisOff(boxid)
 					elseif(isset($_POST['formBuilderForm']['FormBuilderID']) AND $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
 					{
 						// If there is a POST value, assign it to the field.
-						$field['value'] = htmlentities(stripslashes($_POST['formBuilderForm'][$field['field_name']]), ENT_QUOTES, get_option('blog_charset'));
+						if(empty($_POST['formBuilderForm'][$field['field_name']]))
+							$field['value'] = '';
+						else
+							$field['value'] = htmlentities(stripslashes($_POST['formBuilderForm'][$field['field_name']]), ENT_QUOTES, get_option('blog_charset'));
 					}
 					elseif(isset($_GET[$field['field_name']]))
 					{
@@ -1162,7 +1165,7 @@ function toggleVisOff(boxid)
 			break;
 		}
 	
-		if(!preg_match("#" . $pattern . "#isu", $field['value']))
+		if(!preg_match("#" . $pattern . "#isU", $field['value']))
 		{
 			$post_errors = true;
 		}

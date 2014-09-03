@@ -563,14 +563,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 					   	if(!is_file($module_filename)) continue;
 					   	$module_data = implode("", file($module_filename));
 
-					   	if(preg_match("#\n\w*name\: ([^\r\n]+)#isU", $module_data, $regs)) {
+					   	if(preg_match("#[\r\n]name\: ([^\r\n]+)[\r\n]#is", $module_data, $regs)) {
 					   		$module_name = $regs[1];
 					   	} else {
 					   		$module_name = $entry;
 					   	}
 					   	$field['Type'] .= ",'$entry|$module_name'";
 					   	
-					   	if(preg_match("#\n\w*instructions\: ([^\r\n]+)#isU", $module_data, $regs)) {
+					   	if(preg_match("#[\r\n]*instructions\: ([^\r\n]+)[\r\n]#is", $module_data, $regs)) {
 					   		$module_instructions = "\\n\\n" . addslashes($regs[1]);
 					   	} else {
 					   		$module_instructions = "";
