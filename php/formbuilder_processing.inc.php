@@ -196,9 +196,14 @@
 			
 			$formDisplay = apply_filters('formbuilder_prepend_formDisplay', $formDisplay);
 
-			$formDisplay .= "\n<form class='formBuilderForm form-horizontal $formTags' id='formBuilder$formID' " .
+			$formDisplayID = "formBuilder{$formID}";
+			$formDisplayID = apply_filters('formbuilder_formDisplayID', $formDisplayID);
+
+			$formDisplay .= "\n<form class='formBuilderForm form-horizontal $formTags' id='{$formDisplayID}' " .
 					"action='" . $form['action_target'] . "' method='" . strtolower($form['method']) . "' onsubmit='return fb_disableForm(this);'>" .
 					"<input type='hidden' name='formBuilderForm[FormBuilderID]' value='" . $form_id . "' />";
+
+			$formDisplay = apply_filters('formbuilder_formDisplay_formStart', $formDisplay);
 
 			
 			// Paged form related controls for CSS and Javascript
@@ -242,6 +247,10 @@ function toggleVisOff(boxid)
 			// Get the fields for the form.
 			$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FIELDS . " WHERE form_id = '" . $form['id'] . "' ORDER BY display_order ASC;";
 			$related = $wpdb->get_results($sql, ARRAY_A);
+
+			// Filter the fields as needed.
+			$related = apply_filters('formbuilder_filter_fields_processing', $related);
+			$formDisplay = apply_filters('formbuilder_formDisplay_post_field_filter', $formDisplay);
 
 			$submit_button_set = false;
 
@@ -764,21 +773,26 @@ function toggleVisOff(boxid)
 																			. "onblur=\"fb_ajaxRequest('" . $page_path . "php/formbuilder_parser.php', 'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\"/> $formHelpJava</div>";
 						break;
 					}
-					
-					if($field['field_type'] != 'system field' && $field['field_type'] != 'wp user id')
-					{
-						$formDisplay .= "\n<div class='$divClass' id='$divID' title='" . $field['error_message'] . "' $visibility><a name='$divID'></a>";
 
-						if(isset($_POST['formBuilderForm']['FormBuilderID']) AND $_POST['formBuilderForm']['FormBuilderID'] == $form_id) 
-							$formDisplay .= "\n<span id='formBuilderErrorSpace$divID'>$formError</span>";
-						elseif(!isset($_GET['supress_errors']) AND !isset($_GET['suppress_errors'])) 
-							$formDisplay .= "\n<span id='formBuilderErrorSpace$divID'>$formError</span>";
-	
-						$formDisplay .= "\n$formLabel";
-						$formDisplay .= "\n$formInput";
-						$formDisplay .= "\n</div>";
+					$formFieldDisplay = apply_filters('formbuilder_display_field_filter', $field);
+
+					if(empty($formFieldDisplay) && $field['field_type'] != 'system field' && $field['field_type'] != 'wp user id')
+					{
+						$formFieldDisplay .= "\n<div class='$divClass' id='$divID' title='" . $field['error_message'] . "' $visibility><a name='$divID'></a>";
+
+						if(isset($_POST['formBuilderForm']['FormBuilderID']) AND $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
+							$formFieldDisplay .= "\n<span id='formBuilderErrorSpace$divID'>$formError</span>";
+						elseif(!isset($_GET['supress_errors']) AND !isset($_GET['suppress_errors']))
+							$formFieldDisplay .= "\n<span id='formBuilderErrorSpace$divID'>$formError</span>";
+
+						$formFieldDisplay .= "\n$formLabel";
+						$formFieldDisplay .= "\n$formInput";
+						$formFieldDisplay .= "\n</div>";
 					}
-					
+
+					// Allow for other methods of displaying the form field
+					$formDisplay .= $formFieldDisplay;
+
 					// Check for new page of form details.
 					if($new_page == true)
 					{
