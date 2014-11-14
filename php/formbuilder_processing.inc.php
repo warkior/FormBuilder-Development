@@ -152,8 +152,8 @@
 		// Load the Form Action module, if different than the standard.
 		if($form['action'] != "") {
 			if(include_once(FORMBUILDER_PLUGIN_PATH . "modules/" . $form['action'])) {
-				$startup_funcname = "formbuilder_startup_" . preg_replace("#\..+#isU", "", $form['action']);
-				$processor_funcname = "formbuilder_process_" . preg_replace("#\..+#isU", "", $form['action']);
+				$startup_funcname = "formbuilder_startup_" . preg_replace("#\..+#is", "", $form['action']);
+				$processor_funcname = "formbuilder_process_" . preg_replace("#\..+#is", "", $form['action']);
 
 				if(function_exists("$startup_funcname"))
 					$module_status = $startup_funcname($form);
