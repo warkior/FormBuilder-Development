@@ -193,6 +193,7 @@
 			$formTags = implode(' ', $formTags);
 			
 			$formDisplay = "";
+			$post_errors = '';
 			
 			$formDisplay = apply_filters('formbuilder_prepend_formDisplay', $formDisplay);
 
@@ -926,18 +927,27 @@ function toggleVisOff(boxid)
 
 				}
 			}
+
+			// Create extended form variable.
+			$extendedForm = $form;
+			$extendedForm['allFields'] = $allFields;
+
+			// Final check of fields before marking form as successfully submitted...
+			do_action('formbuilder_submit_final_check', $extendedForm);
+			$post_errors = apply_filters('formbuilder_final_errors_filter', $post_errors);
 			
 			// Process Form Results if necessary
-			if(!isset($post_errors) 
+			if(empty($post_errors)
 			&& isset($_POST['formBuilderForm']['FormBuilderID']) 
 			&& $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
 			{
-			
-			
+
+				// Apply filter to fields after successful form submission.
+				$extendedForm = apply_filters('formbuilder_submit_success_pre_value_parsing', $extendedForm);
 			
 				// Convert numeric selection values to the real form values
 				// Iterate through the form fields to add values to the email sent to the recipient.
-				foreach($allFields as $key=>$field)
+				foreach($extendedForm['allFields'] as $key=>$field)
 				{
 					// If select box or radio buttons, we need to translate the posted value into the real value.
 					if(
@@ -954,19 +964,18 @@ function toggleVisOff(boxid)
 						} else {
 							$option_value = $option_label = $roption;
 						}
-						
-						$allFields[$key]['value'] = trim($option_value);
+
+						$extendedForm['allFields'][$key]['value'] = trim($option_value);
 					}
 				}
-				
-					
-				
-				
+
+				$extendedForm = apply_filters('formbuilder_submit_success_post_value_parsing', $extendedForm);
+
 				$msg = "";
 				// If enabled, put backup copies of the form data into a database.
 				if(get_option('formbuilder_db_xml') != '0')
 				{
-					$msg = formbuilder_process_db($form, $allFields);
+					$msg = formbuilder_process_db($form, $extendedForm['allFields']);
 				}
 				
 				// Check if an alternate form processing system is used.
@@ -974,17 +983,17 @@ function toggleVisOff(boxid)
 				if($form['action'] != "") {
 						if(function_exists("$processor_funcname"))
 						{
-							$msg = $processor_funcname($form, $allFields);
+							$msg = $processor_funcname($form, $extendedForm['allFields']);
 							$func_run = true;
 						}
 						else
-							$msg = formbuilder_process_email($form, $allFields);
+							$msg = formbuilder_process_email($form, $extendedForm['allFields']);
 				}
 				else
-					$msg = formbuilder_process_email($form, $allFields);
+					$msg = formbuilder_process_email($form, $extendedForm['allFields']);
 					
 				// Check for and process any redirections at this point.
-				if(!$msg) formbuilder_check_redirection($form, $allFields);
+				if(!$msg) formbuilder_check_redirection($form, $extendedForm['allFields']);
 
 				if(!isset($func_run))
 				{
@@ -998,7 +1007,7 @@ function toggleVisOff(boxid)
 						
 						// Populate ~variable~ tags in the autoresponse with values submitted by the user.
 						$txtAllFields = ""; 
-						foreach($allFields as $field)
+						foreach($extendedForm['allFields'] as $field)
 						{
 							if(
 								trim($field['field_name']) != "" AND
@@ -1042,7 +1051,7 @@ function toggleVisOff(boxid)
 			}
 			else
 			{
-				if(isset($post_errors) AND isset($missing_post_fields) AND $post_errors AND $missing_post_fields)
+				if(!empty($post_errors) AND !empty($missing_post_fields))
 				{
 					$msg = "\n<div class='formBuilderFailure alert alert-error'><h4>" . $formBuilderTextStrings['form_problem'] . "</h4><p>" . $formBuilderTextStrings['send_mistakes'] . "</p>";
 					$msg .= "\n<ul>";
@@ -1053,7 +1062,7 @@ function toggleVisOff(boxid)
 
 					$formDisplay = $msg;
 				}
-				elseif(isset($post_errors) AND is_string($post_errors))
+				elseif(!empty($post_errors) AND is_string($post_errors))
 				{
 					$msg = "\n<div class='formBuilderFailure alert alert-error'><h4>" . $formBuilderTextStrings['form_problem'] . "</h4>";
 					$msg .= "\n<p>$post_errors</p></div>\n" . $formDisplay;
