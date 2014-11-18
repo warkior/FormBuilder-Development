@@ -130,7 +130,8 @@
 		
 		$siteurl = get_option('siteurl');
 		$relative_path = str_replace(ABSOLUTE_PATH, "/", FORMBUILDER_PLUGIN_PATH);
-		$page_path = $siteurl . $relative_path;
+		//$page_path = $siteurl . $relative_path;
+		$page_path = plugin_dir_url(__DIR__);
 
 		// Pull the form data from the db for the selected form ID.
 		$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FORMS . " WHERE id='$form_id';";
@@ -932,9 +933,14 @@ function toggleVisOff(boxid)
 			$extendedForm = $form;
 			$extendedForm['allFields'] = $allFields;
 
-			// Final check of fields before marking form as successfully submitted...
-			do_action('formbuilder_submit_final_check', $extendedForm);
-			$post_errors = apply_filters('formbuilder_final_errors_filter', $post_errors);
+			if(isset($_POST['formBuilderForm']['FormBuilderID'])
+			   && $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
+			{
+				// Final check of fields before marking form as successfully submitted...
+				do_action('formbuilder_submit_final_check', $extendedForm);
+				$post_errors = apply_filters('formbuilder_final_errors_filter', $post_errors);
+			}
+
 			
 			// Process Form Results if necessary
 			if(empty($post_errors)
