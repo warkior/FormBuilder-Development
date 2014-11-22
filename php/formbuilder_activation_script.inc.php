@@ -1152,6 +1152,18 @@ WARNING! This update will change how the email FROM address is created. You may 
 
 				update_option('formbuilder_version', "1.04");
 			}
+
+
+
+			// Upgrade to version 1.05
+			if(get_option('formbuilder_version') < 1.05)
+			{
+				formbuilder_admin_alert("Upgraded FormBuilder to version 1.05", nl2br("
+* Bug fixing.
+					"));
+
+				update_option('formbuilder_version', "1.05");
+			}
 			
 			
 			
