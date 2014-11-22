@@ -346,7 +346,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		// Only load the custom css if it is enabled.
 		if($custom_css == "Enabled")
 		{
-			$css_path = FORMBUILDER_PLUGIN_URL . "css/formbuilder_styles.css";
+			$css_path = plugins_url( 'css/formbuilder_styles.css', __FILE__ );
 			?>
 			<link rel='stylesheet' href='<?php echo $css_path; ?>' type='text/css' media='all' />
 			<?php
@@ -356,7 +356,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		// Load any additional css needed for the site.
 		if(file_exists(WP_CONTENT_DIR . "/additional_styles.css"))
 		{
-			$css_path = WP_CONTENT_URL . "/additional_styles.css";
+			$css_path = content_url() . "/additional_styles.css";
 			?>
 			<!-- ADDITIONAL CSS CUSTOMIZATION -->
 			<link rel='stylesheet' href='<?php echo $css_path; ?>' type='text/css' media='all' />
@@ -365,7 +365,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		}
 		elseif(file_exists(FORMBUILDER_PLUGIN_PATH . "additional_styles.css"))
 		{
-			$css_path = FORMBUILDER_PLUGIN_URL . "additional_styles.css";
+			$css_path = plugins_url( 'additional_styles.css', __DIR__ );
 			?>
 			<!-- ADDITIONAL CSS CUSTOMIZATION -->
 			<link rel='stylesheet' href='<?php echo $css_path; ?>' type='text/css' media='all' />

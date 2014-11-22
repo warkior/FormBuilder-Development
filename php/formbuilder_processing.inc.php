@@ -937,7 +937,7 @@ function toggleVisOff(boxid)
 			   && $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
 			{
 				// Final check of fields before marking form as successfully submitted...
-				do_action('formbuilder_submit_final_check', $extendedForm);
+				$extendedForm = apply_filters('formbuilder_submit_final_check', $extendedForm);
 				$post_errors = apply_filters('formbuilder_final_errors_filter', $post_errors);
 			}
 
@@ -1077,6 +1077,8 @@ function toggleVisOff(boxid)
 				}
 			}
 
+			$formDisplay = apply_filters('formbuilder_formDisplay_final', $formDisplay);
+
 			return("<div id='$formCSSID'>$formDisplay</div>");
 
 		}
@@ -1092,16 +1094,25 @@ function toggleVisOff(boxid)
 	 */
 	function formbuilder_check_redirection($form, $fields)
 	{
+		$redirect_url = '';
+
 		// Iterate through the form fields to add values to the email sent to the recipient.
 		foreach($fields as $field)
 		{
 			// Add the followup page redirect, if it exists.
 			if($field['field_type'] == "followup page" AND trim($field['field_value']) != "")
 			{
-				//echo "<meta HTTP-EQUIV='REFRESH' content='0; url=" . $field['field_value'] . "'>";
-				header("Location: " . $field['field_value']);
+				$redirect_url = $field['field_value'];
+				break;
 			}
+		}
 
+		// Capture any plugin related redirects.
+		$redirect_url = apply_filters('formbuilder_redirection', $redirect_url);
+
+		if(!empty($redirect_url))
+		{
+			header("Location: " . $redirect_url);
 		}
 	}
 
