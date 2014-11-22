@@ -776,7 +776,9 @@ function toggleVisOff(boxid)
 						break;
 					}
 
-					$formFieldDisplay = apply_filters('formbuilder_display_field_filter', $field);
+					// Additional processing of form fields
+					$formFieldDisplay = '';
+					$formFieldDisplay = apply_filters('formbuilder_display_field_filter', $formFieldDisplay, $field);
 
 					if(empty($formFieldDisplay) && $field['field_type'] != 'system field' && $field['field_type'] != 'wp user id')
 					{
@@ -805,9 +807,9 @@ function toggleVisOff(boxid)
 					$allFields[] = $field;
 				}
 			}
-			
-			
-			
+
+
+
 			
 			
 			$referrer_info = get_option('formBuilder_referrer_info');
