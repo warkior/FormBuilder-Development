@@ -3,7 +3,7 @@ Contributors: warkior
 Tags: form, forms, email, comments, contact, input, spam, form to email, email form, contact form
 Requires at least: 2.7
 Tested up to: 4.0.1
-Stable tag: 1.03
+Stable tag: 1.04
 
 Allows WordPress bloggers to easily create customised contact forms for use on pages or posts.
 
@@ -67,6 +67,9 @@ Programming and Design by [James Warkentin](http://www.warkior.com/)
 3. Adding new form fields.
 
 == Changelog ==
+
+= 1.04 =
+* Bug Fix: Silly bug fix.
 
 = 1.03 =
 * Bug Fix: Regex fixes in various places to replace deprecated code.
