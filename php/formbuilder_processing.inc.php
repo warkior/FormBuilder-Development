@@ -328,7 +328,7 @@ function toggleVisOff(boxid)
 					elseif(isset($_POST['formBuilderForm']['FormBuilderID']) AND $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
 					{
 						// If there is a POST value, assign it to the field.
-						if(empty($_POST['formBuilderForm'][$field['field_name']]))
+						if(!isset($_POST['formBuilderForm'][$field['field_name']]))
 							$field['value'] = '';
 						else
 							$field['value'] = htmlentities(stripslashes($_POST['formBuilderForm'][$field['field_name']]), ENT_QUOTES, get_option('blog_charset'));
