@@ -131,7 +131,7 @@
 		$siteurl = get_option('siteurl');
 		$relative_path = str_replace(ABSOLUTE_PATH, "/", FORMBUILDER_PLUGIN_PATH);
 		//$page_path = $siteurl . $relative_path;
-		$page_path = plugin_dir_url(__DIR__);
+		$page_path = plugin_dir_url( dirname(dirname(__FILE__)) . '/formbuilder.php' );
 
 		// Pull the form data from the db for the selected form ID.
 		$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FORMS . " WHERE id='$form_id';";
