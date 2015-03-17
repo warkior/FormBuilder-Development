@@ -120,7 +120,10 @@
 	// Function to display and process the actual form.
 	function formbuilder_process_form($form_id, $data=false)
 	{
+		do_action('formbuilder_start_process_form', $form_id);
+
 		global $wpdb;
+
 		
 		if (! defined('SID')) {
 			define('SID', '');
@@ -941,6 +944,16 @@ function toggleVisOff(boxid)
 				// Final check of fields before marking form as successfully submitted...
 				$extendedForm = apply_filters('formbuilder_submit_final_check', $extendedForm);
 				$post_errors = apply_filters('formbuilder_final_errors_filter', $post_errors);
+			}
+
+
+			// Allow third-party plugins to process form results.
+			if(empty($post_errors)
+			   && isset($_POST['formBuilderForm']['FormBuilderID'])
+			   && $_POST['formBuilderForm']['FormBuilderID'] == $form_id)
+			{
+				do_action('formbuilder_do_submit', $extendedForm);
+				$post_errors = apply_filters('formbuilder_do_submit_errors_filter', $post_errors);
 			}
 
 			

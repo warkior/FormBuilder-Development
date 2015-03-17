@@ -655,7 +655,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  		
  		$response_id = $form['autoresponse'];
  		$results = $wpdb->get_results("SELECT * FROM " . FORMBUILDER_TABLE_RESPONSES . " WHERE id = '" . $response_id . "';", ARRAY_A);
- 		$autoresponse = $results[0];
+ 		$autoresponse = !empty($results[0]) ? $results[0] : '';
  		$form['autoresponse'] = $autoresponse;
  		
  		$sql = "SELECT * FROM " . FORMBUILDER_TABLE_TAGS . " WHERE form_id = $form_id;";
@@ -677,6 +677,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  	function formbuilder_options_importForm()
  	{
  		global $wpdb;
+	    $formData = '';
 		
 		if(!formbuilder_user_can('create'))
 		{
@@ -684,7 +685,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			return;
 		}
  		
- 		if($_POST['formData'])
+ 		if(!empty($_POST['formData']))
  		{
  			formbuilder_debug("Importing...");
  			$formData = stripslashes($_POST['formData']);

@@ -68,6 +68,9 @@ Programming and Design by [James Warkentin](http://www.warkior.com/)
 
 == Changelog ==
 
+= 1.06 =
+* Feature: More wordpress hook integration.
+
 = 1.05 =
 * Bug Fix: More bug fixing.
 
