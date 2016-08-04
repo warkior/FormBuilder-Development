@@ -172,7 +172,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
 	/**
 	 * Old form editing controls.
-	 * @param unknown_type $form_id
+	 * @param $form_id
 	 */
  	function formbuilder_options_editForm($form_id)
  	{

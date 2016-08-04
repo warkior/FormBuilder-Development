@@ -86,7 +86,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		if(!empty($result))
 			return;
 
-		$entityFbId = htmlentities($_GET['fbid']);
+		$entityFbId = isset($_GET['fbid']) ? htmlentities($_GET['fbid']) : 0;
 		
 		switch($_GET['fbaction']) {
 
