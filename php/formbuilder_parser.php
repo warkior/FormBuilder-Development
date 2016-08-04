@@ -35,12 +35,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		die();
 		
 	session_start();
+	if(!is_numeric($field_id))
+		die();
 	
-	$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FIELDS . " WHERE id = '" . $_GET['fieldid'] . "';";
+	$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FIELDS . " WHERE id = '{$field_id}';";
 	$results = $wpdb->get_results($sql, ARRAY_A);
 	$field = $results[0];
 
-	$field['value'] = trim($_GET['val']);
+	$field['value'] = trim(htmlentities($_GET['val']));
 
 
 	if(!formbuilder_validate_field($field))

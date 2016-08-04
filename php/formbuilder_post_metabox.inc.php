@@ -84,7 +84,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		$forms = $wpdb->get_results($sql, ARRAY_A);
 
 		// If the post already has an id, determine whether or not there is a form already linked to it.
-		if($post->ID)
+		if(is_numeric($post->ID))
 		{
 			// Determine if the post/page has a linked form.
 			$sql = "SELECT * FROM " . FORMBUILDER_TABLE_PAGES . " WHERE `post_id` = '" . $post->ID . "';";
@@ -135,6 +135,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		    if( !isset( $id ) )
 		      $id = $_REQUEST[ 'post_ID' ];
 
+			if(!is_numeric($id))
+				return;
+
 			// Get any fb entries for the given page ID.
 			$sql = "SELECT * FROM " . FORMBUILDER_TABLE_PAGES . " WHERE post_id = '" . $id . "';";
 			$results = $wpdb->get_results($sql, ARRAY_A);
@@ -184,6 +187,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		global $wpdb;
 	    if( !isset( $id ) )
 	      $id = $_REQUEST[ 'post_ID' ];
+		if(!is_numeric($id))
+			return;
 
 		$sql = "DELETE FROM " . FORMBUILDER_TABLE_PAGES . " WHERE post_id = '$id';";
 		$wpdb->query($sql);

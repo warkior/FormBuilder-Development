@@ -229,6 +229,7 @@
 					<?php
 						// Tag display and customization.
 						$tags = array();
+						$form_id = is_numeric($form_id) ? $form_id : 0;
 						$sql = "SELECT * FROM " . FORMBUILDER_TABLE_TAGS . " WHERE form_id = '{$form_id}' ORDER BY tag ASC;";
 						$results = $wpdb->get_results($sql, ARRAY_A);
 						foreach($results as $r)
@@ -269,6 +270,7 @@
 				<h4><?php _e('Fields', 'formbuilder'); ?>:</h4>
 				
 				<?php
+					$form_id = is_numeric($form_id) ? $form_id : 0;
 					$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FIELDS . " WHERE form_id = $form_id ORDER BY display_order ASC;";
 					$related = $wpdb->get_results($sql, ARRAY_A);
 					if($related)

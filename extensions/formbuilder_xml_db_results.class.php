@@ -579,7 +579,7 @@ class formbuilder_xml_db_results
 		$searchQuery = '';
 		if(isset($_GET['searchQuery']))
 		{
-			$searchQuery = $_GET['searchQuery'];
+			$searchQuery = htmlentities($_GET['searchQuery']);
 		}
 		
 		if(!isset($error))
@@ -670,7 +670,7 @@ class formbuilder_xml_db_results
 					// Process form search query if necessary.
 					if(isset($_GET['formSearchQuery']) AND $_GET['formSearchQuery'] != "")
 					{
-						$searchQuery = $_GET['formSearchQuery'];
+						$searchQuery = htmlentities($_GET['formSearchQuery'], ENT_QUOTES);
 						$searchQuery = str_replace("\'", "", $searchQuery);
 						$searchQuery = str_replace("'", "", $searchQuery);
 						$sql_where[] = "xmldata LIKE '%$searchQuery%'";
@@ -682,10 +682,10 @@ class formbuilder_xml_db_results
 				?>
 				<div class='formHeadBox'>
 					<form name='formSearchBox' method='get' action=''>
-						<?php if(isset($_GET['page'])) { ?><input type="hidden" name="page" value="<?php echo $_GET['page']; ?>" /><?php } ?>
-						<?php if(isset($_GET['fbaction'])) { ?><input type="hidden" name="fbaction" value="<?php echo $_GET['fbaction']; ?>" /><?php } ?>
-						<?php if(isset($_GET['pageNumber'])) { ?><input type="hidden" name="pageNumber" value="<?php echo $_GET['pageNumber']; ?>" /><?php } ?>
-						<?php if(isset($_GET['formFilterID'])) { ?><input type="hidden" name="formFilterID" value="<?php echo $_GET['formFilterID']; ?>" /><?php } ?>
+						<?php if(isset($_GET['page'])) { ?><input type="hidden" name="page" value="<?php echo htmlentities($_GET['page']); ?>" /><?php } ?>
+						<?php if(isset($_GET['fbaction'])) { ?><input type="hidden" name="fbaction" value="<?php echo htmlentities($_GET['fbaction']); ?>" /><?php } ?>
+						<?php if(isset($_GET['pageNumber'])) { ?><input type="hidden" name="pageNumber" value="<?php echo htmlentities($_GET['pageNumber']); ?>" /><?php } ?>
+						<?php if(isset($_GET['formFilterID'])) { ?><input type="hidden" name="formFilterID" value="<?php echo htmlentities($_GET['formFilterID']); ?>" /><?php } ?>
 						<input type="text" name="formSearchQuery" value="<?php echo $searchQuery; ?>" helptext="Search..." />
 						<input type="submit" name="submit" value="Find" />
 					</form>
@@ -735,10 +735,10 @@ class formbuilder_xml_db_results
 							?>
 							<option value='orphaned' <?php if(isset($_GET['formFilterID']) AND $_GET['formFilterID'] == 'orphaned') { ?>selected='selected'<?php  } ?>>Show Orphaned Forms</option>
 						</select>
-						<?php if(isset($_GET['page'])) { ?><input type="hidden" name="page" value="<?php echo $_GET['page']; ?>" /><?php } ?>
-						<?php if(isset($_GET['fbaction'])) { ?><input type="hidden" name="fbaction" value="<?php echo $_GET['fbaction']; ?>" /><?php } ?>
-						<?php if(isset($_GET['pageNumber'])) { ?><input type="hidden" name="pageNumber" value="<?php echo $_GET['pageNumber']; ?>" /><?php } ?>
-						<?php if(isset($_GET['formSearchQuery'])) { ?><input type="hidden" name="formSearchQuery" value="<?php echo $_GET['formSearchQuery']; ?>" /><?php } ?>
+						<?php if(isset($_GET['page'])) { ?><input type="hidden" name="page" value="<?php echo htmlentities($_GET['page']); ?>" /><?php } ?>
+						<?php if(isset($_GET['fbaction'])) { ?><input type="hidden" name="fbaction" value="<?php echo htmlentities($_GET['fbaction']); ?>" /><?php } ?>
+						<?php if(isset($_GET['pageNumber'])) { ?><input type="hidden" name="pageNumber" value="<?php echo htmlentities($_GET['pageNumber']); ?>" /><?php } ?>
+						<?php if(isset($_GET['formSearchQuery'])) { ?><input type="hidden" name="formSearchQuery" value="<?php echo htmlentities($_GET['formSearchQuery']); ?>" /><?php } ?>
 						<input type="submit" name="submit" value="Go" />
 					</form>
 				</div>

@@ -82,9 +82,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		
 		// Allow for alternate systems to do something with the action.
 		// If nothing is returned, proceed with the regular built-in functions.
-		$result = apply_filters('formbuilder_display_options_page', $_GET['fbaction']);
+		$result = apply_filters('formbuilder_display_options_page', htmlentities($_GET['fbaction']));
 		if(!empty($result))
 			return;
+
+		$entityFbId = htmlentities($_GET['fbid']);
 		
 		switch($_GET['fbaction']) {
 
@@ -93,11 +95,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			break;
 
 			case "editForm":
-				formbuilder_options_editForm($_GET['fbid']);
+				formbuilder_options_editForm($entityFbId);
 			break;
 
 			case "exportForm":
-				formbuilder_options_exportForm($_GET['fbid']);
+				formbuilder_options_exportForm($entityFbId);
 			break;
 
 			case "importForm":
@@ -105,15 +107,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			break;
 
 			case "editFormObject":
-				formbuilder_options_editFormObject($_GET['fbid']);
+				formbuilder_options_editFormObject($entityFbId);
 			break;
 
 			case "copyForm":
-				formbuilder_options_copyForm($_GET['fbid']);
+				formbuilder_options_copyForm($entityFbId);
 			break;
 
 			case "removeForm":
-				formbuilder_options_removeForm($_GET['fbid']);
+				formbuilder_options_removeForm($entityFbId);
 			break;
 
 			case "newResponse":
@@ -121,15 +123,15 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 			break;
 
 			case "editResponse":
-				formbuilder_options_editResponse($_GET['fbid']);
+				formbuilder_options_editResponse($entityFbId);
 			break;
 
 			case "copyResponse":
-				formbuilder_options_copyResponse($_GET['fbid']);
+				formbuilder_options_copyResponse($entityFbId);
 			break;
 
 			case "removeResponse":
-				formbuilder_options_removeResponse($_GET['fbid']);
+				formbuilder_options_removeResponse($entityFbId);
 				formbuilder_options_default();
 			break;
 
@@ -187,7 +189,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	{
 		$formbuilder_nav_options = formbuilder_get_admin_nav_options();
 		?>
-		<?php if(isset($_GET['fbmsg']) AND $_GET['fbmsg'] != "") formbuilder_admin_alert(stripslashes($_GET['fbmsg'])); ?>
+		<?php if(isset($_GET['fbmsg']) AND $_GET['fbmsg'] != "") formbuilder_admin_alert(htmlentities(stripslashes($_GET['fbmsg']))); ?>
 <div class="formbuilder-subnav">
 	<ul class="subsubsub">
 		<?php foreach( $formbuilder_nav_options as $key=>$value ) { ?>

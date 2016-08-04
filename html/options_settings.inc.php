@@ -9,6 +9,7 @@
 				
 				if(isset($_POST['permissions_save']) OR isset($_POST['formbuilder_permissions']))
 				{
+					check_admin_referer( 'formbuilder_settings_update_permissions' );
 					$p = $_POST['formbuilder_permissions'];
 					
 					foreach($fb_permissions as $level=>$cap_a)
@@ -75,7 +76,7 @@
 							</td>
 						</tr>
 					</table>
-
+					<?php wp_nonce_field( 'formbuilder_settings_update_permissions' ); ?>
 					<input type="submit" name="permissions_save" value="<?php _e('Save', 'formbuilder'); ?>" />
 				</form>
 				

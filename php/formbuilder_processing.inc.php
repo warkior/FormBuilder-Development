@@ -123,11 +123,13 @@
 		do_action('formbuilder_start_process_form', $form_id);
 
 		global $wpdb;
-
 		
 		if (! defined('SID')) {
 			define('SID', '');
 		}
+
+		if(!is_numeric($form_id))
+			return;
 
 		$formBuilderTextStrings = formbuilder_load_strings();
 		
