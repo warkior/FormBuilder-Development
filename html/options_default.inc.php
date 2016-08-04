@@ -4,7 +4,11 @@ $_GET += array('pageNumber' => '');
 ?>
 <fieldset class="options metabox-holder">
 
+		<p class="notice"><span style="color:#ff0000; font-weight: bold;">IMPORTANT NOTE:</span> The FormBuilder plugin is quite old and nearing the end of it's usable life.
+		                     It is advisable to switch your WordPress site to some other form handling plugin at this time.</p>
+
 	<div class="info-box-formbuilder postbox">
+
 		<h3 class="info-box-title hndle"><?php _e('Current Forms', 'formbuilder'); ?></h3>
 		<div class="inside">
 		<style>

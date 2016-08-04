@@ -1176,6 +1176,20 @@ WARNING! This update will change how the email FROM address is created. You may 
 
 				update_option('formbuilder_version', "1.06");
 			}
+
+
+
+			// Upgrade to version 1.07
+			if(get_option('formbuilder_version') < 1.07)
+			{
+				formbuilder_admin_alert("Upgraded FormBuilder to version 1.07", nl2br("
+* Security Release: Additional security fixes.
+
+* IMPORTANT! Be advised, FormBuilder is nearing end-of-life and may not be actively maintained in the future. It is advisable to switch your WordPress site to some other Form handling plugin at this time.
+					"));
+
+				update_option('formbuilder_version', "1.07");
+			}
 			
 			
 			

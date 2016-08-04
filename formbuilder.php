@@ -4,13 +4,17 @@ Plugin Name: FormBuilder
 Plugin URI: http://wordpress.org/plugins/formbuilder/
 Description: The FormBuilder plugin allows the administrator to create contact forms of a variety of types for use on their WordPress blog.  The FormBuilder has built-in spam protection and can be further protected by installing the Akismet anti-spam plugin.  Uninstall instructions can be found <a href="http://truthmedia.com/wordpress/formbuilder/documentation/uninstall/">here</a>.  Forms can be included on your pages and posts either by selecting the appropriate form in the dropdown below the content editing box, or by adding them directly to the content with [formbuilder:#] where # is the ID number of the form to be included.
 Author: James Warkentin
-Version: 1.06
+Version: 1.07
 Author URI: http://warkensoft.com/
 
 Originally created by the TruthMedia Internet Group
 
 Plugin Programming and Design by James Warkentin
 http://warkensoft.com/
+
+IMPORTANT! Be advised, FormBuilder is nearing end-of-life and may not be actively
+maintained in the future. It is advisable to switch your WordPress site to some
+other Form handling plugin at this time.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +31,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 */
 	
-	define("FORMBUILDER_VERSION_NUM", "1.06");
+	define("FORMBUILDER_VERSION_NUM", "1.07");
 
 	// Define FormBuilder Related Tables
 	global $table_prefix;
