@@ -523,7 +523,7 @@ function toggleVisOff(boxid)
 						case "small text area":
 							$formLabel = "<div class='$formLabelCSS'>" . decode_html_entities($field['field_label'], ENT_NOQUOTES, get_option('blog_charset')) . " $formHelpJava</div>";
 							$formInput = "<div class='formBuilderSmallTextarea controls'><textarea name='" . $field['name'] . "' rows='4' cols='50' " .
-									"id='field$divID' onblur=\"fb_ajaxRequest('" . $page_path . "php/formbuilder_parser.php', " .
+									"id='field$divID' onblur=\"fb_ajaxRequest('./', " .
 									"'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\" >" .
 									$field['value'] . "</textarea></div>";
 						break;
@@ -531,14 +531,14 @@ function toggleVisOff(boxid)
 						case "large text area":
 							$formLabel = "<div class='$formLabelCSS'>" . decode_html_entities($field['field_label'], ENT_NOQUOTES, get_option('blog_charset')) . " $formHelpJava</div>";
 							$formInput = "<div class='formBuilderLargeTextarea controls'><textarea name='" . $field['name'] . "' rows='10' cols='80' " .
-									"id='field$divID' onblur=\"fb_ajaxRequest('" . $page_path . "php/formbuilder_parser.php', " .
+									"id='field$divID' onblur=\"fb_ajaxRequest('./', " .
 									"'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, " .
 									"'formBuilderErrorSpace$divID')\" >" . $field['value'] . "</textarea></div>";
 						break;
 
 						case "password box":
 							$formLabel = "<div class='$formLabelCSS'>" . decode_html_entities($field['field_label'], ENT_NOQUOTES, get_option('blog_charset')) . " </div>";
-							$formInput = "<div class='formBuilderInput controls'><input type='password' name='" . $field['name'] . "' value='" . $field['value'] . "' id='field$divID' onblur=\"fb_ajaxRequest('" . $page_path . "php/formbuilder_parser.php', 'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\" /> $formHelpJava</div>";
+							$formInput = "<div class='formBuilderInput controls'><input type='password' name='" . $field['name'] . "' value='" . $field['value'] . "' id='field$divID' onblur=\"fb_ajaxRequest('./', 'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\" /> $formHelpJava</div>";
 						break;
 
 						case "required password":
@@ -777,7 +777,7 @@ function toggleVisOff(boxid)
 																			. "name='" . $field['name'] . "' "
 																			. "value='" . $field['value'] . "' "
 																			. "id='field$divID' "
-																			. "onblur=\"fb_ajaxRequest('" . $page_path . "php/formbuilder_parser.php', 'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\"/> $formHelpJava</div>";
+																			. "onblur=\"fb_ajaxRequest('./', 'formid=" . $form['id'] . "&amp;fieldid=" . $field['id'] . "&amp;val='+document.getElementById('field$divID').value, 'formBuilderErrorSpace$divID')\"/> $formHelpJava</div>";
 						break;
 					}
 

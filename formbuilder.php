@@ -4,7 +4,7 @@ Plugin Name: FormBuilder
 Plugin URI: http://wordpress.org/plugins/formbuilder/
 Description: The FormBuilder plugin allows the administrator to create contact forms of a variety of types for use on their WordPress blog.  The FormBuilder has built-in spam protection and can be further protected by installing the Akismet anti-spam plugin.  Uninstall instructions can be found <a href="http://truthmedia.com/wordpress/formbuilder/documentation/uninstall/">here</a>.  Forms can be included on your pages and posts either by selecting the appropriate form in the dropdown below the content editing box, or by adding them directly to the content with [formbuilder:#] where # is the ID number of the form to be included.
 Author: James Warkentin
-Version: 1.07
+Version: 1.08
 Author URI: http://warkensoft.com/
 
 Originally created by the TruthMedia Internet Group
@@ -168,6 +168,44 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	add_action('admin_menu', 'formbuilder_add_custom_box');
 	add_action('admin_bar_init', 'formbuilder_admin_bar_init');
 
+	function formbuilder_ajax()
+	{
+		$action = htmlentities(addslashes($_GET['formbuilder_ajax_action']));
+		switch($action)
+		{
+			case 'validate_field':
+				$field_id = htmlentities(trim($_GET['fieldid']), ENT_QUOTES);
+				$field_value = htmlentities(trim($_GET['val']), ENT_QUOTES);
+				formbuilder_check_valid_field($field_id, $field_value);
+				break;
+
+			default:
+				break;
+		}
+
+		die();
+	}
+
+	function formbuilder_check_valid_field($field_id, $field_value)
+	{
+		global $wpdb;
+
+		if(!is_numeric($field_id))
+			return false;
+
+		$field_id = esc_sql($field_id);
+		$sql = "SELECT * FROM " . FORMBUILDER_TABLE_FIELDS . " WHERE id = '{$field_id}';";
+		$results = $wpdb->get_results($sql, ARRAY_A);
+		$field = $results[0];
+
+		$field['value'] = $field_value;
+
+		if(!formbuilder_validate_field($field))
+		{
+			echo "<div class='formBuilderError'>" . htmlentities($field['error_message']) . "</div>";
+		}
+	}
+
 	function formbuilder_admin_menu()
 	{
 		// Add admin management pages
@@ -226,9 +264,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 		$plugin_dir = basename(dirname(__FILE__));
 		$lang_dir = $plugin_dir . '/lang';
 		load_plugin_textdomain( 'formbuilder', 'wp-content/plugins/' . $lang_dir, $lang_dir );
+
+		if(!empty($_GET['formbuilder_ajax_action']))
+		{
+			formbuilder_ajax();
+			die();
+		}
 		
 		if(fb_is_active())
 		{
+
 			add_filter('the_content', 'formbuilder_main');
 			add_filter('the_content_rss', 'formbuilder_strip_content');
 			add_filter('the_excerpt', 'formbuilder_strip_content');

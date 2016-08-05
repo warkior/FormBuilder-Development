@@ -37,7 +37,7 @@ function fb_disableForm(theform) {
 /* ajax.Request */
 function fb_ajaxRequest(url,submitdata,fieldname) {
 	jx.load(
-		url + '?' + submitdata, 
+		url + '?formbuilder_ajax_action=validate_field&' + submitdata,
 	    function(data){
 		      fb_getResponse(data, fieldname);
 		}
