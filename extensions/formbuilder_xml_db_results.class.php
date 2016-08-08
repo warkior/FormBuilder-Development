@@ -112,7 +112,7 @@ class formbuilder_xml_db_results
 				<h3 class="info-box-title hndle"><?php _e('Export Data:', 'formbuilder'); ?> </h3>
 				<div class="fbxml-form-export inside">
 				
-					<form action='<?php echo FORMBUILDER_PLUGIN_URL;?>php/formbuilder_export_results.php' method='POST'>
+					<form action='' method='POST'>
 						<?php _e('Please select the date range you wish to export data from:', 'formbuilder'); ?><br/><br/>
 						<?php _e('From:', 'formbuilder'); ?> <?php $this->input_date('date_from', date(STD_DATE, time()-(3600*24*30))); ?><br/>
 						<?php _e('To:', 'formbuilder'); ?> <?php $this->input_date('date_to', date(STD_DATE, time())); ?><br/><br/>
@@ -152,6 +152,7 @@ class formbuilder_xml_db_results
 							?>
 							<option value='orphaned' <?php echo $selected; ?>><?php _e('Orphaned Forms (non-standard CSV format)', 'formbuilder'); ?></option>
 						</select><br/><br/>
+						<input type="hidden" name="formbuilder_admin_action" value="export_csv" />
 						<input type='submit' name='Submit' value='<?php _e('Export', 'formbuilder'); ?>' />
 					</form>
 				
@@ -160,6 +161,17 @@ class formbuilder_xml_db_results
 		</fieldset>
 		<?php
 		
+	}
+
+	function handle_formbuilder_csv_export()
+	{
+		// Ensure that only editors or higher can access this page.
+		if ( current_user_can( 'edit_pages' ) ) {
+			$this->export_csv();
+			exit;
+		}
+		else
+			die(__("You must be logged in as an editor or higher to access this page.", 'formbuilder'));
 	}
 	
 	function show_delete()
@@ -441,9 +453,7 @@ class formbuilder_xml_db_results
 	function show_mass_resend_email()
 	{
 		global $wpdb;
-		
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 		
 		$error = '';
 		
@@ -462,7 +472,7 @@ class formbuilder_xml_db_results
 		
 		if(!is_array($email_ids))
 			$error .= "No email ID's detected.  ";
-		
+
 		if($current_user->user_login != $params['Name'])
 			$error .= "You are trying to resend someone else's send list.  ";
 		
@@ -644,8 +654,7 @@ class formbuilder_xml_db_results
 	function list_results()
 	{
 		global $wpdb;
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 		$formFilterID = '';
 		
 		$sql_where = array('1=1');
@@ -789,8 +798,8 @@ class formbuilder_xml_db_results
 						$hash = md5($export_ids_string);
 						
 						update_option('formbuilder_db_export_ids', $export_ids_string);
-						
-						$url = FORMBUILDER_PLUGIN_URL . "php/formbuilder_export_results.php?h=$hash";
+
+						$url = FB_ADMIN_PLUGIN_PATH . "&formbuilder_admin_action=export_csv&h=$hash";
 						echo "<meta HTTP-EQUIV='REFRESH' content='2; url=" . $url . "'><p>Your export should start automatically in a few seconds.  <a href='$url'>Click here if it does not.</a></p>";
 						return;
 					}
@@ -820,7 +829,7 @@ class formbuilder_xml_db_results
 						update_option('formbuilder_db_resend_ids', $resend_ids_string);
 						
 						$url = FB_ADMIN_PLUGIN_PATH . "&fbaction=formResults&fbxmlaction=mass-resend&h=$hash";
-						echo "<meta HTTP-EQUIV='REFRESH' content='30; url=" . $url . "'><p>Preparing to resend.  <a href='$url'>Click here to proceed manually.</a></p>";
+						echo "<meta HTTP-EQUIV='REFRESH' content='2; url=" . $url . "'><p>Preparing to resend.  <a href='$url'>Click here to proceed manually.</a></p>";
 						return;
 					}
 				break;
@@ -998,7 +1007,7 @@ class formbuilder_xml_db_results
 			$where .= " AND form_id NOT IN (" . implode(',', $allFormIDs) . ") ";
 		}
 	
-		if(isset($_GET['h']))
+		if(isset($_GET['h']))   // Used in mass export.
 		{
 			$formResults = get_option('formbuilder_db_export_ids');
 			$hash = md5($formResults);

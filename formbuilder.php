@@ -168,6 +168,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	add_action('admin_menu', 'formbuilder_admin_menu');
 	add_action('admin_menu', 'formbuilder_add_custom_box');
 	add_action('admin_bar_init', 'formbuilder_admin_bar_init');
+	add_action('admin_init', 'formbuilder_admin_init');
 
 	function formbuilder_ajax()
 	{
@@ -917,6 +918,24 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		else
 		{
 			return(array());
+		}
+	}
+
+	function formbuilder_admin_init() {
+		if(!empty( $_POST['formbuilder_admin_action'] ))
+			$action = htmlentities(trim( $_POST['formbuilder_admin_action'] ));
+		elseif(!empty( $_GET['formbuilder_admin_action'] ))
+			$action = htmlentities(trim( $_GET['formbuilder_admin_action'] ));
+		else
+			$action = '';
+
+		switch( $action )
+		{
+			case 'export_csv':
+				$xml_db_results_module = new formbuilder_xml_db_results();
+				$xml_db_results_module->handle_formbuilder_csv_export();
+				exit;
+				break;
 		}
 	}
 	
