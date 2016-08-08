@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php formbuilder_admin_nav('export form'); ?>
 
 <h3 class="info-box-title"><?php _e('Form Export', 'formbuilder'); ?></h3>

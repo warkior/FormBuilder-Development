@@ -40,7 +40,7 @@ if (isset($_GET['submitted'])) {
 }
 
 ==============================================================================*/
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 function formbuilder_checkCreditCard ($cardnumber, $cardname='', &$errornumber, &$errortext) {
 

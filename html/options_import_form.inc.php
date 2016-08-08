@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php formbuilder_admin_nav('import form'); ?>
 
 <form name="formImport" method="POST" action="<?php echo FB_ADMIN_PLUGIN_PATH; ?>&fbaction=importForm">

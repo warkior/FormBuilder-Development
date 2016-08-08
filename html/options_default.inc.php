@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 formbuilder_admin_nav('forms');
 $_GET += array('pageNumber' => '');
 ?>

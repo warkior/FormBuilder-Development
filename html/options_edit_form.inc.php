@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php formbuilder_admin_nav('edit form'); ?>
 <form name="form1" method="post" class="formBuilderForm" action="<?php echo FB_ADMIN_PLUGIN_PATH; ?>&fbaction=editForm&fbid=<?php echo $form_id; ?>">
 

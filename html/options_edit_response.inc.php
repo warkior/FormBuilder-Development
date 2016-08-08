@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php formbuilder_admin_nav('edit response'); ?>
 		<form name="form1" method="post" class="formBuilderForm formBuilderAdminForm" action="<?php echo FB_ADMIN_PLUGIN_PATH; ?>&fbaction=editResponse&fbid=<?php echo $response_id; ?>">
 			<h3 class="info-box-title"><?php _e('Current Autoresponses', 'formbuilder'); ?></h3>

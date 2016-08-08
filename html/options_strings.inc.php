@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php formbuilder_admin_nav('strings'); ?>
 <fieldset class="options metabox-holder">
 
