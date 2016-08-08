@@ -41,7 +41,7 @@ if(!class_exists('FormBuilder_Extensions')) {
 	
 		function formbuilder_get_admin_nav_options($formbuilder_admin_nav_options)
 		{
-			$formbuilder_admin_nav_options['extensions'] = __("Extensions", 'formbuilder');
+			#$formbuilder_admin_nav_options['extensions'] = __("Extensions", 'formbuilder');
 			return($formbuilder_admin_nav_options);
 		}
 		

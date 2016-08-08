@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	
-	define("FORMBUILDER_VERSION_NUM", "1.07");
+	define("FORMBUILDER_VERSION_NUM", "1.08");
 
 	// Define FormBuilder Related Tables
 	global $table_prefix;

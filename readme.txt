@@ -3,7 +3,7 @@ Contributors: warkior
 Tags: form, forms, email, comments, contact, input, spam, form to email, email form, contact form
 Requires at least: 2.7
 Tested up to: 4.5.3
-Stable tag: 1.07
+Stable tag: 1.08
 
 Allows WordPress bloggers to easily create customised contact forms for use on pages or posts.
 
@@ -72,9 +72,11 @@ Programming and Design by [James Warkentin](http://www.warkior.com/)
 
 == Changelog ==
 
+= 1.08 =
+* Security Release: Code updates to comply with WordPress.org security requirements.
+
 = 1.07 =
 * Security Release: Fixing some additional security bugs.
-* IMPORTANT! Be advised, FormBuilder is nearing end-of-life and may not be actively maintained in the future. It is advisable to switch your WordPress site to some other Form handling plugin at this time.
 
 = 1.06 =
 * Security Release: Fixing some potential XSS vulnerabilities.
